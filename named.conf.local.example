@@ -1,0 +1,20 @@
+zone "rhb.ff" {
+   type master;
+   file "/etc/bind/zones/rhb.ff.zone";
+   allow-transfer { acl_trusted_transfer; };
+};
+
+acl "acl_trusted_transfer" {
+     none;
+};
+
+acl "acl_trusted_clients" {
+      // localhost (RFC 3330) - Loopback-Device addresses  
+      127.0.0.0/8;     // 127.0.0.0 - 127.255.255.255  
+ 
+      // Private Network (RFC 1918) - e. e. LAN            
+      192.168.0.0/16;  // 192.168.0.0 - 192.168.255.255 
+ 
+      // Private Network (RFC 1918) - e. g. VPN            
+      10.0.0.0/8;   // 10.0.0.0 - 10.255.255.255
+};
