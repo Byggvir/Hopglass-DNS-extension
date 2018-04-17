@@ -1,13 +1,13 @@
-#Hopglass-DNS-extension
+# Hopglass-DNS-extension
 Extends Hopglass frontend to create zone files for bind9.
 
-#Purpose
+# Purpose
 
 Managing your freifunk nodes with *ssh* its a bit boring. You have to use IPv6 addresses to address the nodes. One way to get the IPv6 addresses is to use the hopglass frontend and copy an paste the addresses.
 
 To ease my life I set up a DNS-Server on an Raspberry Pi in my local network and create the required zone file from the *nodes.json* file on the map server.
 
-#What you need
+# What you need
 
 You need 
 
@@ -18,20 +18,20 @@ You need
 I would prefer to install the PHP scripts on a Hopglass frontend or equivalent server. The script assume that the *nodes.json* is available in a sub-directory */data/* under *zone.php*.  
 
 
-#Files
+# Files
 
 * zone.php: Returns the DNS zone file.
 * zone.header.inc: Contains the header for a zone file
 * zone.conf.inc: Allows to configure some variables.
 
-#Installation
+# Installation
 
 1. Change *zone.header.inc* and *zone.conf.inc* to your needs.
 2. Copy the files *zone.** to the root directory of your Hopglass frontend.
 3. Call */zone.php* and save it into */etc/bind/zones/xyz.zone* or wherever you store your zone-files.
 4. restart Bind9 with *sudo systemctl restart bind9*
 
-##Cronjob for regular updates
+## Cronjob for regular updates
 
 Insert a script file named ff-zone-update into */etc/crond.hourly* or */etc/crond.daily* to update the zone files every hour or every day.
 
@@ -45,7 +45,7 @@ Insert a script file named ff-zone-update into */etc/crond.hourly* or */etc/cron
    && cp /tmp/rhb.ff.zone /etc/bind/zones/ 
 </pre>
 
-#Bind9 zone definition
+# Bind9 zone definition
 
 You can define the Freifunk zone as folows:
 
@@ -61,11 +61,11 @@ You can define the Freifunk zone as folows:
 
 Change zone name and file name to your needs.
 
-#Known caveats
+# Known caveats
 
 * The script lacks a check for multiple routers with the same hostname.
 
-#Example
+# Example
 
 You get a zone file for Freifunk Rheinbach under:
 
