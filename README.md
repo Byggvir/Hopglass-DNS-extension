@@ -42,7 +42,8 @@ Insert a script file named ff-zone-update into */etc/crond.hourly* or */etc/cron
  #
  # Simple cron script - get zone file for freifunk DNS
    wget -O /tmp/rhb.ff.zone map.freifunk-rheinbach.de/zone.php \
-   && cp /tmp/rhb.ff.zone /etc/bind/zones/ 
+   && cp /tmp/rhb.ff.zone /etc/bind/zones/
+   systemnctl restart bind9
 </pre>
 
 # Bind9 zone definition
