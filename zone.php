@@ -12,21 +12,6 @@ include_once 'zone.conf.inc';
 
 include_once 'zone.header.inc';
 
-// if $server is not set in zone.conf.inc use SERVER_NAME from request
-
-if ($server == "" ) { 
-  $server=$_SERVER['SERVER_NAME'];
-}  
-
-if ( $proto == "" ) {
-  if ( $_SERVER['HTTPS'] == "" ) {
-    $proto="http://";
-  }
-  else {
-    $proto="https://";
-  }
-}
-
 // Gluon setup allow more characters in a hostname then DNS
 // Therefore we must convert the hostname into an legal DNS hostname
  
@@ -45,11 +30,25 @@ function legal_hostname ($name)
 
 }
 
+// Compare hostnames of two nodes for usort
+
+function cmp($a, $b)
+{
+    return strcmp($a['nodeinfo']['hostname'], $b['nodeinfo']['hostname']);
+}
+
 // Get nodes.json and convert it into an array.
-$json = file_get_contents('http://' . $server . $datapath . '/nodes.json')
+
+$json = file_get_contents($json_url)
   or die ("Can not get file!");
+  
 $nodes = json_decode ($json,true)
   or die ("Json convert error");
+
+// Sort after hostname
+
+usort($nodes['nodes'], "cmp");
+
 
 // Check if nodes.json has version 2
 if ( $nodes['version'] == 2 ) { 
