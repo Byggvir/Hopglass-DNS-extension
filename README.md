@@ -73,7 +73,7 @@ Change zone name and file name to your needs.
 
 You get a zone file for Freifunk Rheinbach under:
 
-[http://map.freifunk-rheinbach.de/zone.php](URL)
+[map.freifunk-rheinbach.de/zone.php](http://map.freifunk-rheinbach.de/zone.php)
 
 # Copyright
 
