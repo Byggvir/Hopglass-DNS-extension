@@ -45,30 +45,34 @@ $json = file_get_contents($json_url)
 $nodes = json_decode ($json,true)
   or die ("Json convert error");
 
-// Sort after hostname
+// Sort the nodes after their hostname
 
 usort($nodes['nodes'], "cmp");
 
-
 // Check if nodes.json has version 2
+
 if ( $nodes['version'] == 2 ) { 
 
-  // We have a file with the right version
-
-  // Create DNS AAAA and CNAME record vor every node.
+  // We have a file with the right version. Lets do the work.
+  // Create DNS AAAA and CNAME record for every node.
 
   foreach ( $nodes['nodes'] as $value ) {
   
     // A node may have multiple IP addresses
-    // We use only the first non local address
+    // We use only the first non link address
 
     $c = count($value['nodeinfo']['network']['addresses']);
-
+    
+    // A node should have at least two ip address.
+    // If we have only a link address "fe80::"
+    // we will use this one.
+    
     if ( $c > 0 ) {
 
       $ip = $value['nodeinfo']['network']['addresses'][0];
       
-      // Find first non local IPv6 address 
+      // Find first non link IPv6 address 
+      
       $i = 1 ;
       while ( $i < $c and substr($ip,0,6) == "fe80::" ) {
      
@@ -77,6 +81,7 @@ if ( $nodes['version'] == 2 ) {
       }
   
       // Convert hostname into a legal hostname
+      
       $hostname = legal_hostname($value['nodeinfo']['hostname']);
  
       // Print a AAAA record 
@@ -86,18 +91,27 @@ if ( $nodes['version'] == 2 ) {
       // Print a CNAME record without sites hostname prefix
  
       foreach ( $hostname_prefix as $prefix ) {
+        
         $cname=preg_replace("/".$prefix."/","",$hostname);
+        
         if ( $cname != $hostname ) {
           print ( $cname . "\t\t\tCNAME\t" . $hostname . "\n");
         } // if cname
-      } // for each prefix
+      
+      } // foreach prefix
+    
     } // if c 
+  
   } // for each nodes
+
 } // end then 
 
 else  {
-  // Error message 
+  
+  // Error message
+  
   print ('Wrong nodes.json version. This script works only with version 2.') ;
+
 };
 // End if version 2 
 

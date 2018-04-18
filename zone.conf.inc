@@ -42,9 +42,16 @@
 
   $json_url = $json_proto . $json_server . $json_data_path . $json_nodes ;
 
+// The serial in the zone file is calculated with date($serial_date_format);
+// I assume that updating the zone file once an hour is good enough.
+
+// If you update your zone file(s) more frequently change the $serial_dateformat to "ymdHi"; 
+// $serial_date_format= "ymdHi"; 
+  $serial_date_format = "YmdH";
+  
 // If you use a prefix for the hostname and wish to use shorter names without the prefix
 // you can define the prefixes here.
- 
+  
   $hostname_prefix = 
     array ( 
       'su-rhb-',

@@ -4,8 +4,12 @@
 // thomas@freifunk-rheinbach.de
 
 // This file defines the header for the zone file DNS (bind9).
-  $serial=date("YmdH");
-  print <<<END
+
+include_once 'zone.conf.inc';
+
+$serial=date($serial_date_format);
+
+print <<<END
 \$ORIGIN .
 \$TTL 172800     ; 2 days
 $domain     IN SOA      pi1.$domain. root.pi1.$domain. (
