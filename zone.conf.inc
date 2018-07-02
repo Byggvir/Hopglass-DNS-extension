@@ -3,28 +3,30 @@
 // Replace with your domain. 
 // Hint: "ff." is a currentlty unused TLD.
   
-  $domain="rhb.ff";
-    
+
+  if ( array_key_exists('domain', $_REQUEST) ) {
+    $domain = $_REQUEST['domain'];
+  }
+  else {
+    $domain= "rhb.ff" ;
+  }
+ 
 // Get server running the script
 
-  if ($server == "" ) { 
-    $server=$_SERVER['SERVER_NAME'];
-  }  
+  $server=$_SERVER['SERVER_NAME'];
   
 // Update to your needs when the server with nodes.json
 // differs from the server running zone.php.
   
   $json_server=$server;
    
-  if ( $proto == "" ) {
-    if ( $_SERVER['HTTPS'] == "" ) {
-      $proto="http://";
-    }
-    else {
-    $proto="https://";
-    }
+  if ( ! array_key_exists('HTTPS', $_SERVER) ) {
+    $proto="http://";
   }
-  
+  else {
+    $proto="https://";
+  }
+
   $json_proto=$proto;
   
 // Replace with the datapath for the nodes.json file when it's not in a sub-directory /data 

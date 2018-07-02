@@ -19,7 +19,7 @@ I would prefer to install the PHP scripts on a Hopglass frontend or equivalent s
 
 # Files
 
-* zone.php: Returns the DNS zone file.
+* zone.php: Returns the DNS zone file. Parameter ?domain=example.org
 * zone.header.inc: Contains the header for a zone file
 * zone.conf.inc: Allows to configure some variables.
 
@@ -40,7 +40,7 @@ Insert a script file named *ff-zone-update* or whatever you like into */etc/cron
 #!/bin/sh
 #
 # Simple cron script - get zone file for freifunk DNS
-  wget -O /tmp/rhb.ff.zone map.freifunk-rheinbach.de/zone.php \
+  wget -O /tmp/rhb.ff.zone map.freifunk-rheinbach.de/zone.php?domain=example.org \
   && cp /tmp/rhb.ff.zone /etc/bind/zones/
   systemnctl restart bind9
 </pre>

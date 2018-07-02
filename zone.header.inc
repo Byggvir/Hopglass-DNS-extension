@@ -10,20 +10,21 @@ include_once 'zone.conf.inc';
 $serial=date($serial_date_format);
 
 print <<<END
-\$ORIGIN .
-\$TTL 172800     ; 2 days
-$domain     IN SOA      pi1.$domain. root.pi1.$domain. (
+\$ORIGIN $domain.
+\$TTL 3600     ; 2 days
+@	IN SOA     nn.$domain. root.$domain. ( ; Adjust to your community
         $serial    ; serial
         10800      ; refresh (3 hours)
         3600       ; retry (1 hour)
         604800     ; expire (1 week)
         86400      ; minimum (1 day)
 )
-        NS      pi1.$domain.
-        MX      10 pi1.$domain.
-\$ORIGIN $domain.
-pi1     A       192.168.2.3
-pi1     AAAA    fda0:747e:ab29:2241:6018:26ff:fe71:4253
+        IN	NS      nn.$domain.         ; Adjust to your community
+        IN	MX      10 nn.$domain.      ; Adjust to your community
+nn      A	10.152.112.1                ; Adjust to your community, see site.conf
+        AAAA	2a03:2260:3017:1400::1  ; Adjust to your community, see site.conf
+nextnode    CNAME   nn
+mail    IN AAAA 2a03:2260:3017:1400::1  ; Adjust to your community
 
 END;
 ?>
