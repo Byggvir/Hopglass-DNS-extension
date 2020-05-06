@@ -6,6 +6,8 @@
 
 // Create a zone file for DNS (bind9) from /data/nodes.json on a hogglass client server.
 
+header("Content-Type: text/plain");
+
 include_once 'zone.conf.inc';
 
 // load the header for the zonefile
